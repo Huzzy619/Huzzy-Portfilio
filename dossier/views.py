@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 # Create your views here.
-@login_required(login_url='login')
+# @login_required(login_url='login')
+
+
 def index (request):
 
     works = Project.objects.all()

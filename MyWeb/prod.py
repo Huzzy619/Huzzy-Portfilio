@@ -10,6 +10,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['portfolio-production-6724.up.railway.app']
 
+CSRF_TRUSTED_ORIGINS = ['https://portfolio-production-6724.up.railway.app']
+
 # DATABASES = {
 #     "default": dj_database_url.config()
 # }
