@@ -21,4 +21,3 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ['CLOUD_API_KEY'],
     'API_SECRET': os.environ['CLOUD_API_SECRET'],
 }
-
