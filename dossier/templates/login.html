@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuri-Reg-Task</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="shortcut icon" href="{% static 'images/favicon-32x32.png' %} " type="image/x-icon">
+</head>
+
+<body>
+    <main>
+        <!-- <div class="words">
+            <div>
+                <h1>Learn to code by <br>watching others</h1>
+            </div>
+            <div class="talk">
+                See how experienced developers solve problems in real-time.
+                Watching scripted tutorials is great but
+                understanding how developers think is invaluable.
+            </div>
+        </div> -->
+        <div class="form">
+            <div class="thereafter"><p><span>Login to </span> My Porfolio website </p></div>
+            <div class="reg">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-field">
+                        <input type="text"  placeholder="username" class="edit" name="username" required >
+                        <span class="error"><i>username cannot be empty</i></span>
+                    </div>
+                    <div class="form-field">
+                        <input type="password" name="password" id="" placeholder="Password" class="edit"required>
+                        <span class="error"><i>Password cannot be empty</i></span>
+
+                    </div>
+
+
+                    <div class="claim">
+                        <input type="submit" value="LOGIN" >
+                    </div>
+
+
+                </form>
+
+                <div class="terms">
+                    <small> By clicking on the button you are agreeing to our <span class="t-c">Terms and
+                            Services</span></small>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+</body>
+
+</html>

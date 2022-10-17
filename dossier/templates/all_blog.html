@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 
-     <title>Blog detail</title>
+     <title>Blog Page</title>
 <!-- 
 Hydro Template 
 http://www.templatemo.com/tm-509-hydro
@@ -83,8 +83,7 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
 
                     <div class="col-md-offset-1 col-md-5 col-sm-12">
-                         <h2>{{post.title}}</h2>
-                         <p style="color: white;">posted {{post.date_created | naturaltime }} </p>
+                         <h2>Read all blogs </h2>
                     </div>
                     
                </div>
@@ -93,34 +92,46 @@ http://www.templatemo.com/tm-509-hydro
 
 
      <!-- BLOG DETAIL -->
-     <section id="blog-detail" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
+     <!-- BLOG -->
+     <section id="blog" data-stellar-background-ratio="0.5">
+        <div class="container">
+             <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                       <div class="section-title">
+                            <h2>Blog Posts</h2>
+                            <span class="line-bar">...</span>
+                       </div>
+                  </div>
 
-                    <div class="col-md-offset-1 col-md-10 col-sm-12">
-                         <!-- BLOG THUMB -->
-                         <div class="blog-detail-thumb">
-                              <div class="blog-image">
-                                   <img src="{{post.image.url}}" class="img-responsive" alt="Blog Image">
-                              </div>
+                  {% for post in posts %}
+                  <div class="col-md-6 col-sm-6">
+                       <!-- BLOG THUMB -->
+                       <div class="media blog-thumb">
+                            <div class="media-object media-left">
+                                 <a href="{% url 'blog_detail' post.slug %}"><img src="{{post.image.url}}"
+                                           class="img-responsive blog-img" alt="" /></a>
+                            </div>
+                            <div class="media-body blog-info">
+                                 <small><i class="fa fa-clock-o"></i> {{post.date_created|date:"F d, Y"}}</small>
+                                 <h3>
+                                      <a href="{%url 'blog_detail' post.slug %}">{{post.title}}</a>
+                                 </h3>
+                                 <p>
+                                      {{post.content|striptags | truncatewords:8  }}
+                                 </p>
+                                 <a href="{% url 'blog_detail' post.slug %}" class="btn section-btn">Read article</a>
+                            </div>
+                       </div>
+                  </div>
+                  {% empty%}
 
+                  <h2>There are no blogs to display at the Moment</h2>
+                  
+                  {% endfor %}
 
-                                   {{post.content | safe}}
-
-                              
-                              <div class="blog-social-share">
-                                   <h4>Share this article</h4>
-                                   <a href="https://www.facebook.com/templatemo" class="btn btn-primary"><i class="fa fa-facebook"></i>facebook</a>
-                                   <a href="#" class="btn btn-success"><i class="fa fa-twitter"></i>twitter</a>
-                                   <a href="#" class="btn btn-danger"><i class="fa fa-google-plus"></i>google plus</a>
-                              </div>
-                         </div>
-                    </div>
-                    
-               </div>
-          </div>
-     </section>
-
+             </div>
+        </div>
+   </section>
 
      <!-- FOOTER -->
      <footer data-stellar-background-ratio="0.5">

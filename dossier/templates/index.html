@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-     <title>{{profile.brand_name}} - Landing Page</title>
+     <title>{{profile.brand_name|upper}} - Landing Page</title>
      <!-- 
 Hydro Template 
 http://www.templatemo.com/tm-509-hydro
@@ -15,12 +15,25 @@ http://www.templatemo.com/tm-509-hydro
      <meta name="author" content="" />
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+     <link rel="stylesheet" href="{% static 'izi/dist/css/iziToast.min.css' %}">
+
+
      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} " />
      <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %} " />
      <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}" />
+
+     <style>
+          .whatsapp {
+               color: white;
+
+          }
+          .whatsapp:hover{
+               color: red;
+          }
+     </style>
 </head>
 
 <body>
@@ -42,7 +55,7 @@ http://www.templatemo.com/tm-509-hydro
                     </button>
 
                     <!-- lOGO TEXT HERE -->
-                    <a href="index.html" class="navbar-brand">{{profile.brand_name}}</a>
+                    <a href="{% url 'index' %}" class="navbar-brand">{{profile.brand_name|upper}} </a>
                </div>
 
                <!-- MENU LINKS -->
@@ -52,6 +65,10 @@ http://www.templatemo.com/tm-509-hydro
                          <li><a href="#about" class="smoothScroll">About</a></li>
                          <li><a href="#blog" class="smoothScroll">Blog</a></li>
                          <li><a href="#work" class="smoothScroll">My Work</a></li>
+                         {% if user.is_authenticated %}
+                         <li><a href="{% url 'add_blog' %}" class="smoothScroll">Add Blog</a></li>
+                         <li><a href="{% url 'add_work' %}" class="smoothScroll">New Work</a></li>
+                         {% endif %}
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -63,6 +80,9 @@ http://www.templatemo.com/tm-509-hydro
                          </li>
                          <li>
                               <a href="{{profile.instagram}}"><i class="fa fa-instagram"></i></a>
+                         </li>
+                         <li>
+                              <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
                          </li>
                          <li class="section-btn"><a href="#contact">Contact Me</a></li>
                     </ul>
@@ -77,11 +97,13 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
                     <div class="col-md-6 col-sm-12">
                          <div class="home-info">
-                              <h1>We make beautiful websites for all people.</h1>
+                              <h1>We make beautiful and dynamic websites for all.</h1>
                               <a href="#about" class="btn section-btn smoothScroll">Start a project</a>
                               <span>
                                    Get in touch {{profile.phone}}
-                                   <small>For any inquiry</small>
+
+                                   <small>Make your inquiry through<a href="https://wa.me/{{profile.phone}}" target="_blank" class="whatsapp">
+                                              WhatsApp <i class="fa fa-whatsapp"></i></a></small>
                               </span>
                          </div>
                     </div>
@@ -89,8 +111,10 @@ http://www.templatemo.com/tm-509-hydro
                     <div class="col-md-6 col-sm-12">
                          <div class="home-video">
                               <div class="embed-responsive embed-responsive-16by9">
-                                   <iframe src="https://www.youtube.com/embed/AqcjdkPMPJA" frameborder="0"
-                                        allowfullscreen></iframe>
+                                   <!-- <iframe src="https://www.youtube.com/embed/AqcjdkPMPJA" frameborder="0"
+                                        allowfullscreen></iframe> -->
+                                   <!-- <img src="{% static 'images/Huzzy_profile.jpg'%}" alt=""
+                                        style="height: 300px; width: 300px; border-radius: 5%;"> -->
                               </div>
                          </div>
                     </div>
@@ -109,13 +133,13 @@ http://www.templatemo.com/tm-509-hydro
                                    <span class="line-bar">...</span>
                               </div>
                               <p>
-                                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                   eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                   enim ad minim.
+                                   Hi there, my name is {{me.first_name|capfirst}} {{me.last_name|capfirst}} and i am
+                                   Software Engineer
+                                   with over 3+ years of experience.
                               </p>
                               <p>
-                                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                   eiusmod tempor.
+                                   Let me make for you, beautiful, dynamic and a website filled with all sorts of
+                                   features.
                               </p>
                          </div>
                     </div>
@@ -123,7 +147,7 @@ http://www.templatemo.com/tm-509-hydro
                     <div class="col-md-3 col-sm-6">
                          <div class="about-info skill-thumb">
                               {% for skill in skills %}
-                              <strong>{{skill.name}}</strong>
+                              <strong>{{skill.name| capfirst}}</strong>
                               <span class="pull-right">{{skill.proficiency}}%</span>
                               <div class="progress">
                                    <div class="progress-bar progress-bar-primary" role="progressbar"
@@ -154,82 +178,37 @@ http://www.templatemo.com/tm-509-hydro
                          </div>
                     </div>
 
+                    {% for post in blogs %}
                     <div class="col-md-6 col-sm-6">
                          <!-- BLOG THUMB -->
                          <div class="media blog-thumb">
                               <div class="media-object media-left">
-                                   <a href="blog-detail.html"><img src="{% static 'images/blog-image1.jpg' %}"
-                                             class="img-responsive" alt="" /></a>
+                                   <a href="{% url 'blog_detail' post.slug %}"><img src="{{post.image.url}}"
+                                             class="img-responsive blog-img" alt="" /></a>
                               </div>
                               <div class="media-body blog-info">
-                                   <small><i class="fa fa-clock-o"></i> December 22, 2017</small>
+                                   <small><i class="fa fa-clock-o"></i> {{post.date_created|date:"F d, Y"}}</small>
                                    <h3>
-                                        <a href="blog-detail.html">How To Find Out Beautiful Workspace.</a>
+                                        <a href="{%url 'blog_detail' post.slug %}">{{post.title}}</a>
                                    </h3>
                                    <p>
-                                        Lorem ipsum dolor sit consectetur adipiscing morbi venenatis.
+                                        {{post.content|striptags | truncatewords:8  }}
                                    </p>
-                                   <a href="blog-detail.html" class="btn section-btn">Read article</a>
+                                   <a href="{% url 'blog_detail' post.slug %}" class="btn section-btn">Read article</a>
                               </div>
                          </div>
                     </div>
+                    {% empty%}
 
-                    <div class="col-md-6 col-sm-6">
-                         <!-- BLOG THUMB -->
-                         <div class="media blog-thumb">
-                              <div class="media-object media-left">
-                                   <a href="blog-detail.html"><img src="{% static 'images/blog-image2.jpg' %}"
-                                             class="img-responsive" alt="" /></a>
-                              </div>
-                              <div class="media-body blog-info">
-                                   <small><i class="fa fa-clock-o"></i> December 18, 2017</small>
-                                   <h3><a href="blog-detail.html">woman sportwear.</a></h3>
-                                   <p>
-                                        Lorem ipsum dolor sit consectetur adipiscing morbi venenatis.
-                                   </p>
-                                   <a href="blog-detail.html" class="btn section-btn">Read more</a>
-                              </div>
-                         </div>
-                    </div>
+                    <h2>There are no blogs to display at the Moment</h2>
 
-                    <div class="col-md-6 col-sm-6">
-                         <!-- BLOG THUMB -->
-                         <div class="media blog-thumb">
-                              <div class="media-object media-left">
-                                   <a href="blog-detail.html"><img src="{% static 'images/blog-image3.jpg' %}"
-                                             class="img-responsive" alt="" /></a>
-                              </div>
-                              <div class="media-body blog-info">
-                                   <small><i class="fa fa-clock-o"></i> December 14, 2017</small>
-                                   <h3><a href="blog-detail.html">new creative fashion.</a></h3>
-                                   <p>
-                                        Lorem ipsum dolor sit consectetur adipiscing morbi venenatis.
-                                   </p>
-                                   <a href="blog-detail.html" class="btn section-btn">Read article</a>
-                              </div>
-                         </div>
-                    </div>
+                    {% endfor %}
 
-                    <div class="col-md-6 col-sm-6">
-                         <!-- BLOG THUMB -->
-                         <div class="media blog-thumb">
-                              <div class="media-object media-left">
-                                   <a href="blog-detail.html"><img src="{% static 'images/blog-image4.jpg' %}"
-                                             class="img-responsive" alt="" /></a>
-                              </div>
-                              <div class="media-body blog-info">
-                                   <small><i class="fa fa-clock-o"></i> December 10, 2017</small>
-                                   <h3>
-                                        <a href="blog-detail.html">minimalist design trend in 2018.</a>
-                                   </h3>
-                                   <p>
-                                        Lorem ipsum dolor sit consectetur adipiscing morbi venenatis.
-                                   </p>
-                                   <a href="blog-detail.html" class="btn section-btn">View Detail</a>
-                              </div>
-                         </div>
-                    </div>
+
+
                </div>
+               <a href="{% url 'blog_posts' %}" class="btn section-btn">View All Blogs </a>
+
           </div>
      </section>
 
@@ -249,7 +228,7 @@ http://www.templatemo.com/tm-509-hydro
                          <!-- WORK THUMB -->
                          <div class="work-thumb">
                               <a href="{{work.link}}" class="image-popup">
-                                   <img src="{{work.image.url}}" class="img-responsive" alt="Work" />
+                                   <img src="{{work.image.url}}" class="img-responsive blog-img" alt="Work" />
 
                                    <div class="work-info">
                                         <h3>{{work.name}}</h3>
@@ -258,64 +237,12 @@ http://www.templatemo.com/tm-509-hydro
                               </a>
                          </div>
                     </div>
+                    {% empty%}
+
+                    <h2>There are no works to display at the Moment</h2>
+
                     {% endfor %}
 
-                    <div class="col-md-3 col-sm-6">
-                         <!-- WORK THUMB -->
-                         <div class="work-thumb">
-                              <a href="{% static 'images/work-image1.jpg' %}" class="image-popup">
-                                   <img src="{% static 'images/work-image1.jpg' %}" class="img-responsive image"
-                                        alt="Work" />
-
-                                   <div class="work-info">
-                                        <h3>Clean &amp; Minimal</h3>
-                                        <small>Product Design</small>
-                                   </div>
-                              </a>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <!-- WORK THUMB -->
-                         <div class="work-thumb">
-                              <a href="{% static 'images/work-image2.jpg' %}" class="image-popup">
-                                   <img src="{% static 'images/work-image2.jpg' %}" class="img-responsive" alt="Work" />
-
-                                   <div class="work-info">
-                                        <h3>Studio Bag</h3>
-                                        <small>Branding</small>
-                                   </div>
-                              </a>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <!-- WORK THUMB -->
-                         <div class="work-thumb">
-                              <a href="{% static 'images/work-image3.jpg' %}" class="image-popup">
-                                   <img src="{% static 'images/work-image3.jpg' %}" class="img-responsive" alt="Work" />
-
-                                   <div class="work-info">
-                                        <h3>Frame Design</h3>
-                                        <small>Photography</small>
-                                   </div>
-                              </a>
-                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                         <!-- WORK THUMB -->
-                         <div class="work-thumb">
-                              <a href="{% static 'images/work-image4.jpg' %}" class="image-popup">
-                                   <img src="{% static 'images/work-image4.jpg' %}" class="img-responsive" alt="Work" />
-
-                                   <div class="work-info">
-                                        <h3>Paint Work</h3>
-                                        <small>Art, Design</small>
-                                   </div>
-                              </a>
-                         </div>
-                    </div>
                </div>
           </div>
      </section>
@@ -326,32 +253,39 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
                     <div class="col-md-12 col-sm-12">
                          <div class="section-title">
-                              <h2>Contact us</h2>
+                              <h2>Contact Me</h2>
                               <span class="line-bar">...</span>
                          </div>
                     </div>
 
                     <div class="col-md-8 col-sm-8">
                          <!-- CONTACT FORM HERE -->
-                         <form id="contact-form" role="form" action="#" method="post">
+                         <form id="contact-form" role="form" action="{% url 'contact' %}" method="post">
+                              {% csrf_token %}
                               <div class="col-md-6 col-sm-6">
-                                   <input type="text" class="form-control" placeholder="Full Name" id="cf-name"
-                                        name="cf-name" required="" />
+                                   <input type="text" class="form-control" placeholder="First Name" id="cf-name"
+                                        name="first_name" required="" />
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                   <input type="text" class="form-control" placeholder="Last Name" id="cf-name"
+                                        name="last_name" required="" />
                               </div>
 
                               <div class="col-md-6 col-sm-6">
                                    <input type="email" class="form-control" placeholder="Your Email" id="cf-email"
-                                        name="cf-email" required="" />
+                                        name="email" required="" />
                               </div>
 
                               <div class="col-md-6 col-sm-6">
                                    <input type="tel" class="form-control" placeholder="Your Phone" id="cf-number"
-                                        name="cf-number" required="" />
+                                        name="phone" required="" />
                               </div>
 
-                              <div class="col-md-6 col-sm-6">
+                              <!-- <div class="col-md-6 col-sm-6">
                                    <select class="form-control" id="cf-budgets" name="cf-budgets">
                                         <option>Budget Level</option>
+                                        <option value=""></option>
                                         <option>$500 to $1,000</option>
                                         <option>$1,000 to $2,200</option>
                                         <option>$2,200 to $4,500</option>
@@ -359,11 +293,11 @@ http://www.templatemo.com/tm-509-hydro
                                         <option>$7,500 to $12,000</option>
                                         <option>$12,000 or more</option>
                                    </select>
-                              </div>
+                              </div> -->
 
                               <div class="col-md-12 col-sm-12">
                                    <textarea class="form-control" rows="6" placeholder="Your requirements"
-                                        id="cf-message" name="cf-message" required=""></textarea>
+                                        id="cf-message" name="requirements" required=""></textarea>
                               </div>
 
                               <div class="col-md-4 col-sm-12">
@@ -380,9 +314,12 @@ http://www.templatemo.com/tm-509-hydro
             3. Click "Share" and choose "Embed map" tab
             4. Copy only URL and paste it within the src="" field below
 	-->
-                              <iframe
+                              <!-- <iframe
                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.3030413476204!2d100.5641230193719!3d13.757206847615207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf51ce6427b7918fc!2sG+Tower!5e0!3m2!1sen!2sth!4v1510722015945"
-                                   allowfullscreen></iframe>
+                                   allowfullscreen></iframe> -->
+
+                              <img src="{% static 'images/Huzzy_profile.jpg'%}" alt=""
+                                   style="height: 300px; width: 300px;">
                          </div>
                     </div>
                </div>
@@ -395,15 +332,14 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
                     <div class="col-md-5 col-sm-12">
                          <div class="footer-thumb footer-info">
-                              <h2>Hydro Company</h2>
+                              <h2>{{profile.brand_name|upper}}</h2>
                               <p>
-                                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                   eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                   We make beautiful and dynamic websites for all.
                               </p>
                          </div>
                     </div>
 
-                    <div class="col-md-2 col-sm-4">
+                    <!-- <div class="col-md-2 col-sm-4">
                          <div class="footer-thumb">
                               <h2>Company</h2>
                               <ul class="footer-link">
@@ -424,14 +360,14 @@ http://www.templatemo.com/tm-509-hydro
                                    <li><a href="#">Support</a></li>
                               </ul>
                          </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3 col-sm-4">
                          <div class="footer-thumb">
-                              <h2>Find us</h2>
+                              <h2>Location</h2>
                               <p>
-                                   123 Grand Rama IX, <br />
-                                   Krung Thep Maha Nakhon 10400
+                                   Barbeach, <br />
+                                   Victoria Island, Lagos
                               </p>
                          </div>
                     </div>
@@ -440,20 +376,23 @@ http://www.templatemo.com/tm-509-hydro
                          <div class="footer-bottom">
                               <div class="col-md-6 col-sm-5">
                                    <div class="copyright-text">
-                                        <p>Copyright &copy; 2017 Your Company</p>
+                                        <p>Copyright &copy; 2022 {{profile.brand_name|upper}}</p>
                                    </div>
                               </div>
                               <div class="col-md-6 col-sm-7">
                                    <div class="phone-contact">
-                                        <p>Call us <span>(+66) 010-020-0340</span></p>
+                                        <p>Call <span>{{profile.phone}}</span></p>
                                    </div>
                                    <ul class="social-icon">
                                         <li>
-                                             <a href="https://www.facebook.com/templatemo" class="fa fa-facebook-square"
+                                             <a href="{{profile.facebook}}" class="fa fa-facebook-square"
                                                   attr="facebook icon"></a>
                                         </li>
-                                        <li><a href="#" class="fa fa-twitter"></a></li>
-                                        <li><a href="#" class="fa fa-instagram"></a></li>
+                                        <li><a href="{{profile.twitter}}" class="fa fa-twitter"></a></li>
+                                        <li><a href="{{profile.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li>
+                                             <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
+                                        </li>
                                    </ul>
                               </div>
                          </div>
@@ -463,73 +402,7 @@ http://www.templatemo.com/tm-509-hydro
      </footer>
 
      <!-- MODAL -->
-     <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-               <div class="modal-content modal-popup">
-                    <div class="modal-header">
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                         </button>
-                    </div>
 
-                    <div class="modal-body">
-                         <div class="container-fluid">
-                              <div class="row">
-                                   <div class="col-md-12 col-sm-12">
-                                        <div class="modal-title">
-                                             <h2>Hydro Co</h2>
-                                        </div>
-
-                                        <!-- NAV TABS -->
-                                        <ul class="nav nav-tabs" role="tablist">
-                                             <li class="active">
-                                                  <a href="#sign_up" aria-controls="sign_up" role="tab"
-                                                       data-toggle="tab">Create an account</a>
-                                             </li>
-                                             <li>
-                                                  <a href="#sign_in" aria-controls="sign_in" role="tab"
-                                                       data-toggle="tab">Sign In</a>
-                                             </li>
-                                        </ul>
-
-                                        <!-- TAB PANES -->
-                                        <div class="tab-content">
-                                             <div role="tabpanel" class="tab-pane fade in active" id="sign_up">
-                                                  <form action="#" method="post">
-                                                       <input type="text" class="form-control" name="name"
-                                                            placeholder="Name" required />
-                                                       <input type="telephone" class="form-control" name="telephone"
-                                                            placeholder="Telephone" required />
-                                                       <input type="email" class="form-control" name="email"
-                                                            placeholder="Email" required />
-                                                       <input type="password" class="form-control" name="password"
-                                                            placeholder="Password" required />
-                                                       <input type="submit" class="form-control" name="submit"
-                                                            value="Submit Button" />
-                                                  </form>
-                                             </div>
-
-                                             <div role="tabpanel" class="tab-pane fade in" id="sign_in">
-                                                  <form action="#" method="post">
-                                                       <input type="email" class="form-control" name="email"
-                                                            placeholder="Email" required />
-                                                       <input type="password" class="form-control" name="password"
-                                                            placeholder="Password" required />
-                                                       <input type="submit" class="form-control" name="submit"
-                                                            value="Submit Button" />
-                                                       <a href="https://www.facebook.com/templatemo">Forgot your
-                                                            password?</a>
-                                                  </form>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
 
      <!-- SCRIPTS -->
      <script src="{% static 'js/jquery.js' %}"></script>
@@ -538,6 +411,65 @@ http://www.templatemo.com/tm-509-hydro
      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
      <script src="{% static 'js/smoothscroll.js' %}"></script>
      <script src="{% static 'js/custom.js' %}"></script>
+
+
+     <script src="{% static 'izi/dist/js/iziToast.min.js' %}"></script>
+
+     <script>
+          {% if form.errors %}
+          {% for field in form %}
+          {% for error in field.errors %}
+          iziToast.error({
+               title: "Error",
+               message: "{{error}}",
+               position: "topRight"
+          });
+          {% endfor %}
+          {% endfor %}
+          {% endif %}
+     </script>
+
+     <script>
+          {% if messages %}
+          {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+
+
+          iziToast.success({
+               title: 'OK',
+               message: '{{message}}',
+               position: 'topRight',
+          });
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+          iziToast.error({
+               title: 'Error',
+               message: '{{message}}',
+               position: 'topRight',
+               timeout: 10000,
+
+          });
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+          iziToast.warning({
+               title: 'Caution',
+               message: '{{message}}',
+               position: 'topRight',
+               timeout: 10000,
+
+          });
+
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+          iziToast.info({
+               title: 'Hey',
+               message: '{{message}}',
+               position: 'topRight',
+
+          });
+
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+     </script>
+
 </body>
 
 </html>
