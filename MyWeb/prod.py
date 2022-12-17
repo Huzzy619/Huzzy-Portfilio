@@ -8,9 +8,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['huzzy-portfolio.up.railway.app']
+ALLOWED_HOSTS = ['huzzy.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://huzzy-portfolio.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://huzzy.up.railway.app']
 
 # DATABASES = {
 #     "default": dj_database_url.config()
