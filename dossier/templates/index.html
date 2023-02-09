@@ -15,6 +15,8 @@ http://www.templatemo.com/tm-509-hydro
      <meta name="author" content="" />
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+     <link rel="shortcut icon" type="image/jpg" href="{%static 'images/favicon.ico' %}" />
+
      <link rel="stylesheet" href="{% static 'izi/dist/css/iziToast.min.css' %}">
 
 
@@ -30,7 +32,8 @@ http://www.templatemo.com/tm-509-hydro
                color: white;
 
           }
-          .whatsapp:hover{
+
+          .whatsapp:hover {
                color: red;
           }
      </style>
@@ -82,7 +85,12 @@ http://www.templatemo.com/tm-509-hydro
                               <a href="{{profile.instagram}}"><i class="fa fa-instagram"></i></a>
                          </li>
                          <li>
-                              <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
+                              <a href="{{profile.linkedin}}"><i class="fa fa-linkedin"></i></a>
+                         </li>
+
+                         <li>
+                              <a href="https://wa.me/{{profile.phone}}" target="_blank"><i
+                                        class="fa fa-whatsapp"></i></a>
                          </li>
                          <li class="section-btn"><a href="#contact">Contact Me</a></li>
                     </ul>
@@ -102,8 +110,9 @@ http://www.templatemo.com/tm-509-hydro
                               <span>
                                    Get in touch {{profile.phone}}
 
-                                   <small>Make your inquiry through<a href="https://wa.me/{{profile.phone}}" target="_blank" class="whatsapp">
-                                              WhatsApp <i class="fa fa-whatsapp"></i></a></small>
+                                   <small>Make your inquiry through<a href="https://wa.me/{{profile.phone}}"
+                                             target="_blank" class="whatsapp">
+                                             WhatsApp <i class="fa fa-whatsapp"></i></a></small>
                               </span>
                          </div>
                     </div>
@@ -142,9 +151,9 @@ http://www.templatemo.com/tm-509-hydro
                                    features.
                               </p>
                               <p>
-                                   Fast Backend Services built using Python's FastAPI or Django, <br> 
+                                   Fast Backend Services built using Python's FastAPI or Django, <br>
                                    Admin Interface, Email Plugin, Notification System, Social Signup & Login
-                                   and so much more. 
+                                   and so much more.
                               </p>
                          </div>
                     </div>
@@ -178,7 +187,7 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
                     <div class="col-md-12 col-sm-12">
                          <div class="section-title">
-                              <h2>Our Blog</h2>
+                              <h2>Blog Posts</h2>
                               <span class="line-bar">...</span>
                          </div>
                     </div>
@@ -197,7 +206,7 @@ http://www.templatemo.com/tm-509-hydro
                                         <a href="{%url 'blog_detail' post.slug %}">{{post.title}}</a>
                                    </h3>
                                    <p>
-                                        {{post.content|striptags | truncatewords:8  }}
+                                        {{post.content|striptags | truncatewords:8 }}
                                    </p>
                                    <a href="{% url 'blog_detail' post.slug %}" class="btn section-btn">Read article</a>
                               </div>
@@ -232,7 +241,7 @@ http://www.templatemo.com/tm-509-hydro
                     <div class="col-md-3 col-sm-6">
                          <!-- WORK THUMB -->
                          <div class="work-thumb">
-                              <a href="{{work.link}}" class="image-popup">
+                              <a href="{{work.image.url}}" class="image-popup">
                                    <img src="{{work.image.url}}" class="img-responsive blog-img" alt="Work" />
 
                                    <div class="work-info">
@@ -241,7 +250,14 @@ http://www.templatemo.com/tm-509-hydro
                                    </div>
                               </a>
                          </div>
+                         <a href="{{work.link}}">
+                              <h3 class="section-btn" style="margin-bottom: 100px;">{{work.name}}</h3>
+                         </a>
+
+
                     </div>
+
+
                     {% empty%}
 
                     <h2>There are no works to display at the Moment</h2>
@@ -395,8 +411,11 @@ http://www.templatemo.com/tm-509-hydro
                                         </li>
                                         <li><a href="{{profile.twitter}}" class="fa fa-twitter"></a></li>
                                         <li><a href="{{profile.instagram}}" class="fa fa-instagram"></a></li>
+                                        <li><a href="{{profile.linkedin}}" class="fa fa-linkedin"></a></li>
+
                                         <li>
-                                             <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
+                                             <a href="https://wa.me/{{profile.phone}}" target="_blank"><i
+                                                       class="fa fa-whatsapp"></i></a>
                                         </li>
                                    </ul>
                               </div>

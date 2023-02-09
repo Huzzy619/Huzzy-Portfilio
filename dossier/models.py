@@ -16,6 +16,7 @@ class Profile(models.Model):
     instagram = models.URLField()
     facebook = models.URLField()
     twitter = models.URLField()
+    linkedin = models.URLField()
     phone = models.CharField(max_length=15)
     image = models.ImageField(upload_to='profile')
     brand_name = models.CharField(max_length=550)
