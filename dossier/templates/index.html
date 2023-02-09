@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-     <title>{{profile.brand_name|upper}} - Landing Page</title>
+     <title>{{profile.brand_name|upper}} - Portfolio website</title>
      <!-- 
 Hydro Template 
 http://www.templatemo.com/tm-509-hydro
@@ -16,6 +16,11 @@ http://www.templatemo.com/tm-509-hydro
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
      <link rel="shortcut icon" type="image/jpg" href="{%static 'images/favicon.ico' %}" />
+
+     <link rel="apple-touch-icon" sizes="180x180" href="{%static 'images/apple-touch-icon.png'%}">
+     <link rel="icon" type="image/png" sizes="32x32" href="{%static 'images/favicon-32x32.png'%}">
+     <link rel="icon" type="image/png" sizes="16x16" href="{%static 'images/favicon-16x16.png'%}">
+     <link rel="manifest" href="{%static 'images/site.webmanifest' %}">
 
      <link rel="stylesheet" href="{% static 'izi/dist/css/iziToast.min.css' %}">
 
@@ -250,8 +255,8 @@ http://www.templatemo.com/tm-509-hydro
                                    </div>
                               </a>
                          </div>
-                         <a href="{{work.link}}">
-                              <h3 class="section-btn" style="margin-bottom: 100px;">{{work.name}}</h3>
+                         <a href="{{work.link}}" target="_blank">
+                              <h3 class="section-btn" style="margin-bottom: 100px;"><b>{{work.name}}</b></h3>
                          </a>
 
 
