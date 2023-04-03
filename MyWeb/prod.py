@@ -17,7 +17,7 @@ DATABASES = {
     'default': dj_database_url.parse(
         'postgres://nhryipuu:Qykbmz4M7zJFvgdW5R3dS6_oGpZ4f2Da@kashin.db.elephantsql.com/nhryipuu',
         conn_max_age=600,
-        conn_health_checks=True,
+        conn_health_checks=True, 
     )
 }
 
