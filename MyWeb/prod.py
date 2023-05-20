@@ -1,30 +1,41 @@
-from .settings import *
 import os
+
 import dj_database_url
+
+from .settings import *
+from decouple import config
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['huzzy.up.railway.app']
+ALLOWED_HOSTS = ['huzzy.up.railway.app', 'huzzy.cleverapps.io']
 
-CSRF_TRUSTED_ORIGINS = ['https://huzzy.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS]
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgres://nhryipuu:Qykbmz4M7zJFvgdW5R3dS6_oGpZ4f2Da@kashin.db.elephantsql.com/nhryipuu',
+        config('PORTFOLIO_DB'),
         conn_max_age=600,
-        conn_health_checks=True, 
+        conn_health_checks=True,
     )
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+STORAGES = {
+    "default": {
+        "BACKEND": 'cloudinary_storage.storage.MediaCloudinaryStorage'
+        },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ['CLOUD_NAME'],
-    'API_KEY': os.environ['CLOUD_API_KEY'],
-    'API_SECRET': os.environ['CLOUD_API_SECRET'], 
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('CLOUD_API_KEY'),
+    'API_SECRET': config('CLOUD_API_SECRET'),
 }
