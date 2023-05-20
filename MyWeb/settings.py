@@ -89,8 +89,23 @@ WSGI_APPLICATION = "MyWeb.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+import dj_database_url
 DATABASES = {
-    "default": {
+    # "default": dj_database_url.parse(
+    #     url= "mysql://epiz_34244760:@Huzkid619@sql300.epizy.com/epiz_34244760_portfolio", 
+    #     conn_max_age=600,
+    #     conn_health_checks=True
+    # ) 
+    # "default":{
+    #     "ENGINE":"django.db.backends.mysql",
+    #     "NAME": "epiz_34244760_new", 
+    #     "HOST": "sql300.epizy.com",
+    #     "USER": "epiz_34244760",
+    #     "PASSWORD":"MERqv8Jzo7O",
+    #     "PORT":3306
+    # }
+    "default":{
+
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3-mine",
     }
