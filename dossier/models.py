@@ -18,7 +18,7 @@ class Profile(models.Model):
     twitter = models.URLField()
     linkedin = models.URLField()
     phone = models.CharField(max_length=15)
-    image = models.ImageField(upload_to='profile')
+    image = models.URLField()
     brand_name = models.CharField(max_length=550)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -50,9 +50,9 @@ class Contact (models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=250)
     kind = models.CharField(max_length=250)
-    image = models.ImageField(upload_to='works')
+    image = models.URLField() 
     link = models.URLField()
-
+ 
     def __str__(self) -> str:
         return self.name
 
