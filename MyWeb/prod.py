@@ -12,7 +12,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default =False, cast=bool )
 
-ALLOWED_HOSTS = ['huzzy.up.railway.app', 'huzzy.cleverapps.io']
+ALLOWED_HOSTS = ['huzzy.up.railway.app', 'huzzy.cleverapps.io', 'huzzy.vercel.app']
 
 CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS]
 
