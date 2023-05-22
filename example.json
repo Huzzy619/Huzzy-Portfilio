@@ -1,0 +1,6 @@
+{"use": "@vercel/python",
+            "config": {
+                "maxLabdasize": "15mb", 
+                "runtime": "python3.9"
+            }
+        }
