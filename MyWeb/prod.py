@@ -1,34 +1,30 @@
-import os
-
 import dj_database_url
-
-from .settings import *
 from decouple import config
 
+from .settings import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default =False, cast=bool )
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['huzzy.up.railway.app', 'huzzy.cleverapps.io', 'huzzy.vercel.app']
+ALLOWED_HOSTS = ['huzzy.up.railway.app',
+                 'huzzy.cleverapps.io', 'huzzy.vercel.app']
 
 CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS]
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        config('PORTFOLIO_DB'),
+    'default': dj_database_url.config(
         conn_max_age=600,
         conn_health_checks=True,
-    )
+    ),
 }
-
 
 STORAGES = {
     "default": {
         "BACKEND": 'cloudinary_storage.storage.MediaCloudinaryStorage'
-        },
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
