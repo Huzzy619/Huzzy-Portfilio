@@ -7,11 +7,16 @@ dj-database-url==2.0.0
 Django==4.2.1
 django-cloudinary-storage==0.3.0
 django-jazzmin==2.6.0
+django-ninja==0.21.0
+dnspython==2.3.0
+email-validator==2.0.0.post2
 gunicorn==20.1.0
 idna==3.4
+mysqlclient==2.1.1
 Pillow==9.5.0
-psycopg
+psycopg2==2.9.6
 pycodestyle==2.10.0
+pydantic==1.10.8
 python-decouple==3.8
 requests==2.30.0
 six==1.16.0
@@ -21,4 +26,3 @@ typing_extensions==4.5.0
 tzdata==2023.3
 urllib3==1.26.15
 whitenoise==6.4.0
-django-ninja
