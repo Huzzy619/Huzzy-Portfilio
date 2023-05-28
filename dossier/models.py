@@ -52,6 +52,9 @@ class Project(models.Model):
     kind = models.CharField(max_length=250)
     image = models.URLField() 
     link = models.URLField()
+    github_link = models.URLField()
+    date_created =  models.DateTimeField(auto_now_add=True)
+    date_updated  = models.DateTimeField( auto_now=True)
  
     def __str__(self) -> str:
         return self.name
@@ -66,6 +69,8 @@ class Post (models.Model):
     image = models.ImageField(upload_to='blog')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    creator = models.CharField(max_length=500, null=True)
+    link = models.URLField(null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

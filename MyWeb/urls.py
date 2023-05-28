@@ -18,9 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from dossier.views import index
+from rest_portfolio.views import api
+
 urlpatterns = [
+    path('', index, name="index"), 
     path("admin/", admin.site.urls),
-    path('', include('dossier.urls'))
+    path('', include('dossier.urls')), 
+    path('api/', api.urls)
 ]
 
 if settings.DEBUG:

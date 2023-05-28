@@ -1,0 +1,25 @@
+.workl {
+    color: white;
+}
+.workl:hover{
+    color: black;
+}
+
+.whatsapp {
+    color: white;
+
+}
+
+.whatsapp:hover {
+    color: red;
+}
+
+.ses2{
+    margin-top: 5px;
+}
+
+.search {
+ display: flex;
+ align-items: flex-end;
+ float: right;
+}

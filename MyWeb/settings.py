@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     "dossier",
+    "rest_portfolio",
 
 
     "jazzmin",
@@ -95,7 +96,7 @@ DATABASES = {
     "default":{
 
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3-mine",
     },
 
     "default1":{
@@ -106,7 +107,7 @@ DATABASES = {
         "PASSWORD": "0509"
 
 
-    }
+    } 
 
 }
 
@@ -166,6 +167,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "dossier.User"
 
 LOGIN_REDIRECT_URL = "index"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 2525
+
 
 
 # CLOUDINARY_STORAGE = {

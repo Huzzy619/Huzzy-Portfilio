@@ -31,17 +31,9 @@ http://www.templatemo.com/tm-509-hydro
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}" />
+     <link rel="stylesheet" href="{% static 'css/new.css' %}">
 
-     <style>
-          .whatsapp {
-               color: white;
 
-          }
-
-          .whatsapp:hover {
-               color: red;
-          }
-     </style>
 </head>
 
 <body>
@@ -157,8 +149,12 @@ http://www.templatemo.com/tm-509-hydro
                               </p>
                               <p>
                                    Fast Backend Services built using Python's FastAPI or Django, <br>
-                                   Admin Interface, Email Plugin, Notification System, Social Signup & Login
+                                   Admin Interface, Email Plugin, Notification System, Social Signup & Login, Payment
+                                   Integrations
                                    and so much more.
+                              </p>
+                              <p>
+
                               </p>
                          </div>
                     </div>
@@ -202,18 +198,24 @@ http://www.templatemo.com/tm-509-hydro
                          <!-- BLOG THUMB -->
                          <div class="media blog-thumb">
                               <div class="media-object media-left">
-                                   <a href="{% url 'blog_detail' post.slug %}"><img src="{{post.image.url}}"
-                                             class="img-responsive blog-img" alt="" /></a>
+                                   <a href="{{post.link}}">
+                                        <img src={% if post.image_url %}{{post.image_url}}
+                                             {%else%} "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3qgfrS4kHigTKNhhH6EAYMXrZzqW1MDcI7w&usqp=CAU"
+                                             {%endif%} class="img-responsive blog-img" alt="" /></a>
                               </div>
                               <div class="media-body blog-info">
-                                   <small><i class="fa fa-clock-o"></i> {{post.date_created|date:"F d, Y"}}</small>
+                                   <small><i class="fa fa-clock-o"></i> {{post.pubDate|date:"F d, Y"}}</small>
                                    <h3>
-                                        <a href="{%url 'blog_detail' post.slug %}">{{post.title}}</a>
+                                        <a href="{{post.link}}">{{post.title| truncatewords:10}}</a>
                                    </h3>
                                    <p>
+                                        {%if post.content%}
                                         {{post.content|striptags | truncatewords:8 }}
+                                        {%else%}
+                                        {{post.description| truncatewords:8}}
+                                        {%endif%}
                                    </p>
-                                   <a href="{% url 'blog_detail' post.slug %}" class="btn section-btn">Read article</a>
+                                   <a href="{{post.link}}" class="btn section-btn">Read article</a>
                               </div>
                          </div>
                     </div>
@@ -255,9 +257,26 @@ http://www.templatemo.com/tm-509-hydro
                                    </div>
                               </a>
                          </div>
-                         <a href="{{work.link}}" target="_blank">
-                              <h3 class="section-btn" style="margin-bottom: 100px;"><b>{{work.name}}</b></h3>
-                         </a>
+
+                         <div class="section-btn"
+                              style="display: flex; flex-direction: row;  justify-content: center; margin-top: 20px;">
+
+
+                              <a href="{{work.link}}" target="_blank" class="workl ses2"><b>{{work.name}}</b> </a>
+
+
+
+                              <a href="{{work.github_link}}" target="_blank" style="text-decoration: none;"
+                                   class="workl">
+                                   <span style="margin-left: 40px;">
+                                        <i class="fa fa-github" style="font-size: 30px;"></i>
+
+                                   </span>
+                              </a>
+
+                         </div>
+
+
 
 
                     </div>
@@ -268,6 +287,7 @@ http://www.templatemo.com/tm-509-hydro
                     <h2>There are no works to display at the Moment</h2>
 
                     {% endfor %}
+
 
                </div>
           </div>

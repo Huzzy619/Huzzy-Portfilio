@@ -22,6 +22,7 @@ body {
 
 }
 
+
 @media (min-width: 376px) {
     body {
         background-image: url('../images/bg-intro-desktop.png');
@@ -94,6 +95,7 @@ main {
     font-weight: 600;
     color: white;
 }
+
 
 .reg {
     display: flex;
@@ -260,3 +262,4 @@ main {
 
 
 }
+

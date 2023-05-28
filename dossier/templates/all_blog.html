@@ -2,10 +2,11 @@
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
      <title>Blog Page</title>
-<!-- 
+     <!-- 
 Hydro Template 
 http://www.templatemo.com/tm-509-hydro
 -->
@@ -16,13 +17,16 @@ http://www.templatemo.com/tm-509-hydro
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
      <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
      <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+     <link rel="stylesheet" href="{% static 'css/new.css' %}">
+
 </head>
+
 <body>
 
      <!-- PRE LOADER -->
@@ -54,6 +58,14 @@ http://www.templatemo.com/tm-509-hydro
                          <li><a href="{% url 'index' %}#about" class="smoothScroll">About</a></li>
                          <li><a href="{% url 'index' %}#blog" class="smoothScroll">Blog</a></li>
                          <li><a href="{% url 'index' %}#work" class="smoothScroll">My Work</a></li>
+                         <li>
+                              <!-- <div class="input-group">
+                                   <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                   <button type="button" class="btn btn-outline-primary">search</button>
+                                 </div> -->
+
+
+                         </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -67,9 +79,11 @@ http://www.templatemo.com/tm-509-hydro
                               <a href="{{profile.instagram}}"><i class="fa fa-instagram"></i></a>
                          </li>
                          <li>
-                              <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
+                              <a href="https://wa.me/{{profile.phone}}" target="_blank"><i
+                                        class="fa fa-whatsapp"></i></a>
                          </li>
                          <li class="section-btn"><a href="{% url 'index' %}#contact">Contact Me</a></li>
+
                     </ul>
                </div>
           </div>
@@ -83,9 +97,24 @@ http://www.templatemo.com/tm-509-hydro
                <div class="row">
 
                     <div class="col-md-offset-1 col-md-5 col-sm-12">
-                         <h2>Read all blogs </h2>
+                         <h2>Explore blogs about Technology </h2>
                     </div>
-                    
+                    <form method="post">
+                         <div class="input-group search">
+                              {%csrf_token%}
+                              <div class="form-outline">
+
+                                   <input type="search" id="form1" class="form-control" placeholder="Search"
+                                        name="keyword" />
+                              </div>
+                              <button type="submit" class="btn btn-primary">
+                                   <i class="fa fa-search"></i>
+                              </button>
+                         </div>
+                    </form>
+
+
+
                </div>
           </div>
      </section>
@@ -94,44 +123,56 @@ http://www.templatemo.com/tm-509-hydro
      <!-- BLOG DETAIL -->
      <!-- BLOG -->
      <section id="blog" data-stellar-background-ratio="0.5">
-        <div class="container">
-             <div class="row">
-                  <div class="col-md-12 col-sm-12">
-                       <div class="section-title">
-                            <h2>Blog Posts</h2>
-                            <span class="line-bar">...</span>
-                       </div>
-                  </div>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12 col-sm-12">
 
-                  {% for post in posts %}
-                  <div class="col-md-6 col-sm-6">
-                       <!-- BLOG THUMB -->
-                       <div class="media blog-thumb">
-                            <div class="media-object media-left">
-                                 <a href="{% url 'blog_detail' post.slug %}"><img src="{{post.image.url}}"
-                                           class="img-responsive blog-img" alt="" /></a>
-                            </div>
-                            <div class="media-body blog-info">
-                                 <small><i class="fa fa-clock-o"></i> {{post.date_created|date:"F d, Y"}}</small>
-                                 <h3>
-                                      <a href="{%url 'blog_detail' post.slug %}">{{post.title}}</a>
-                                 </h3>
-                                 <p>
-                                      {{post.content|striptags | truncatewords:8  }}
-                                 </p>
-                                 <a href="{% url 'blog_detail' post.slug %}" class="btn section-btn">Read article</a>
-                            </div>
-                       </div>
-                  </div>
-                  {% empty%}
+                         <div class="section-title">
+                              {%if search %}
+                              <h2>Showing results for "{{search}}"</h2>
+                              {%else%}
+                              <h2>Blog Posts</h2>
+                              {%endif%}
+                              <span class="line-bar">...</span>
+                         </div>
+                    </div>
 
-                  <h2>There are no blogs to display at the Moment</h2>
-                  
-                  {% endfor %}
+                    {% for post in posts %}
+                    <div class="col-md-6 col-sm-6">
+                         <!-- BLOG THUMB -->
+                         <div class="media blog-thumb">
+                              <div class="media-object media-left">
+                                   <a href="{{post.link}}">
+                                        <img src={% if post.image_url %}{{post.image_url}}
+                                             {%else%} "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3qgfrS4kHigTKNhhH6EAYMXrZzqW1MDcI7w&usqp=CAU"
+                                             {%endif%} class="img-responsive blog-img" alt="" /></a>
+                              </div>
+                              <div class="media-body blog-info">
+                                   <small><i class="fa fa-clock-o"></i> {{post.pubDate|date:"F d, Y"}}</small>
+                                   <h3>
+                                        <a href="{{post.link}}" target="_blank">{{post.title}}</a>
+                                   </h3>
+                                   <p>
+                                        {%if post.content%}
+                                        {{post.content|striptags | truncatewords:8 }}
+                                        {%else%}
+                                        {{post.description| truncatewords:8}}
+                                        {%endif%}
+                                   </p>
+                                   <!-- <a href="{{post.link}}" target="_blank" class="btn section-btn">Read article</a> -->
+                              </div>
+                         </div>
+                    </div>
+                    {% empty%}
 
-             </div>
-        </div>
-   </section>
+                    <h2>There are no blogs to display</h2>
+                    <p>Try searching for something else</p>
+
+                    {% endfor %}
+
+               </div>
+          </div>
+     </section>
 
      <!-- FOOTER -->
      <footer data-stellar-background-ratio="0.5">
@@ -198,7 +239,8 @@ http://www.templatemo.com/tm-509-hydro
                                         <li><a href="{{profile.twitter}}" class="fa fa-twitter"></a></li>
                                         <li><a href="{{profile.instagram}}" class="fa fa-instagram"></a></li>
                                         <li>
-                                             <a href="https://wa.me/{{profile.phone}}" target="_blank"><i class="fa fa-whatsapp"></i></a> 
+                                             <a href="https://wa.me/{{profile.phone}}" target="_blank"><i
+                                                       class="fa fa-whatsapp"></i></a>
                                         </li>
                                    </ul>
                               </div>
