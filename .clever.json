@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "app_id": "app_542f3a94-9df9-4575-ac20-20d4e3025d30",
+      "org_id": "user_f691ed6f-2b54-468c-9fd1-276a0861947f",
+      "deploy_url": "https://github.com/Huzzy619/Huzzy-Portfilio.git",
+      "name": "Portfilio",
+      "alias": "Portfilio"
+    }
+  ]
+}
