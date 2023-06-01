@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from ninja import NinjaAPI
+from typing import List
 
 from dossier.models import Profile, Project, Contact, Post, Skill
 
@@ -14,13 +15,13 @@ def get_profile(request):
     return profile
 
 
-@api.get('/projects', response=list[ProjectSchema])
+@api.get('/projects', response=List[ProjectSchema])
 def get_projects(request):
     projects = Project.objects.all()
     return projects
 
 
-@api.get("/skills", response=list[SkillSchema])
+@api.get("/skills", response=List[SkillSchema])
 def my_skills(request):
     skills = Skill.objects.all().order_by('-proficiency', 'name')[:5]
 
@@ -37,7 +38,7 @@ def contact_me(request, info: ContactSchema):
     }
 
 
-@api.get('/posts', response=list[PostSchema])
+@api.get('/posts', response=List[PostSchema])
 def blog_posts(request):
     posts = Post.objects.all().order_by('-date_created')
 
