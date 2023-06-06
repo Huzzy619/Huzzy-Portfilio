@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -216,3 +217,9 @@ JAZZMIN_SETTINGS = {
 # JAZZMIN_UI_TWEAKS = {
 #     "theme": "united",
 # }
+
+ADMIN_URL = config("ADMIN_URL", "admin/")
+# # https://docs.djangoproject.com/en/dev/ref/settings/#admins
+# ADMINS = [("""Mine""", "huzzy@django.com")]
+# # https://docs.djangoproject.com/en/dev/ref/settings/#managers
+# MANAGERS = ADMINS

@@ -23,7 +23,7 @@ from rest_portfolio.views import api
 
 urlpatterns = [
     path('', index, name="index"), 
-    path("admin/", admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls), 
     path('', include('dossier.urls')), 
     path('api/', api.urls)
 ]
