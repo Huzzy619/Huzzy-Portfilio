@@ -266,5 +266,5 @@ ADMIN_URL = config("ADMIN_URL", "admin/")
 # # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 # MANAGERS = ADMINS
 
-UNSPLASH_ACCESS_KEY = config("UNSPLASH_ACCESS_KEY")
-UNSPLASH_SECRET_KEY = config("UNSPLASH_SECRET_KEY")
+UNSPLASH_ACCESS_KEY = config("UNSPLASH_ACCESS_KEY", "")
+UNSPLASH_SECRET_KEY = config("UNSPLASH_SECRET_KEY", "")
