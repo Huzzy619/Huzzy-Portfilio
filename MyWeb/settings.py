@@ -212,14 +212,59 @@ JAZZMIN_SETTINGS = {
     # Copyright on the footer
     "copyright": "HUZZY",
 
-}
+    "icons":{
+        "dossier.contact": "fas fa-address-book",
+        "dossier.post":"fas fa-blog",
+        "dossier.profile":"fas fa-user-md",
+        "dossier.project":"fas fa-tasks",
+        "dossier.user":"fas fa-user-circle",
+        "dossier.skill":"fas fa-laptop-house" ,
 
-# JAZZMIN_UI_TWEAKS = {
-#     "theme": "united",
-# }
+        "auth.group": "fas fa-users",
+
+    },
+
+    "show_ui_builder": True,
+
+
+}
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-gray",
+    "accent": "accent-primary",
+    "navbar": "navbar-gray navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "simplex",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
 
 ADMIN_URL = config("ADMIN_URL", "admin/")
 # # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 # ADMINS = [("""Mine""", "huzzy@django.com")]
 # # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 # MANAGERS = ADMINS
+
+UNSPLASH_ACCESS_KEY = config("UNSPLASH_ACCESS_KEY")
+UNSPLASH_SECRET_KEY = config("UNSPLASH_SECRET_KEY")

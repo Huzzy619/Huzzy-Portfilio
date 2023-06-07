@@ -1,4 +1,5 @@
 {% load static %}
+{% load zip_lists %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -193,15 +194,14 @@ http://www.templatemo.com/tm-509-hydro
                          </div>
                     </div>
 
-                    {% for post in blogs %}
+                    {% for post, picture in blogs|zip:pictures %}
                     <div class="col-md-6 col-sm-6">
                          <!-- BLOG THUMB -->
                          <div class="media blog-thumb">
                               <div class="media-object media-left">
-                                   <a href="{{post.link}}">
-                                        <img src={% if post.image_url %}{{post.image_url}}
-                                             {%else%} "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3qgfrS4kHigTKNhhH6EAYMXrZzqW1MDcI7w&usqp=CAU"
-                                             {%endif%} class="img-responsive blog-img" alt="" /></a>
+                                   <a href="{{post.image_url |default:picture}}">
+
+                                        <img src={{post.image_url |default:picture}} class="img-responsive blog-img" alt="" /></a>
                               </div>
                               <div class="media-body blog-info">
                                    <small><i class="fa fa-clock-o"></i> {{post.pubDate|date:"F d, Y"}}</small>
@@ -220,7 +220,6 @@ http://www.templatemo.com/tm-509-hydro
                          </div>
                     </div>
                     {% empty%}
-
                     <h2>There are no blogs to display at the Moment</h2>
 
                     {% endfor %}

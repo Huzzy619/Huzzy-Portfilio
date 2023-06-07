@@ -2,6 +2,7 @@ import datetime
 from urllib.parse import quote
 
 import requests
+from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
@@ -22,6 +23,8 @@ def index(request):
 
     blogs = get_news()[:4]
 
+    pictures_set = get_images()
+
     context = {
 
         'profile': profile,
@@ -30,6 +33,8 @@ def index(request):
         'skills': skills,
 
         'blogs': blogs,
+
+        'pictures': pictures_set
 
     }
 
@@ -40,20 +45,28 @@ def index(request):
 def blog_posts(request):
 
     data = get_news()
+    pictures = get_images(count=(len(data) if len(data) < 30 else 10))
+
     context = {
         'posts':  data,
-        'profile': Profile.objects.first()
+        'profile': Profile.objects.first(),
+        "pictures": pictures
+
 
     }
 
     if request.method == "POST":
         keyword = request.POST.get("keyword")
         data = get_news(keyword)
+        pictures = get_images(
+            count=(len(data) if len(data) < 30 else 10), query=keyword)
 
         context.update(
             {
                 "search": keyword,
-                "posts": data
+                "posts": data,
+                "pictures": pictures
+
             }
         )
 
@@ -76,6 +89,25 @@ def get_news(keyword="Artificial intelligence"):
     return data
 
 
+def get_images(count=4, query="Artificial intelligence"):
+    headers = {
+        "Accept-Version": "v1"
+    }
+    params = {
+        "count": count,
+        "orientation": "portrait",
+        "query": query
+    }
+    resp = requests.get(url=f"https://api.unsplash.com/photos/random/?client_id={settings.UNSPLASH_ACCESS_KEY}",
+                        headers=headers, params=params)
+
+    pictures = resp.json()
+
+    pictures_set = [picture['urls']['regular'] for picture in pictures]
+
+    return pictures_set
+
+
 def blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     profile = Profile.objects.first()
@@ -95,9 +127,9 @@ def contact(request):
             form.save()
 
             send_mail("New contact message",
-                      "Check the database for new contact message", 
+                      "Check the database for new contact message",
                       request.POST.get('email'), ["blazingkrane@gmail.com"])
-            
+
             messages.success(request, 'Your Message has been sent succesfully')
             return redirect('/')
         else:
@@ -117,6 +149,3 @@ def add_blog(request):
 def add_work(request):
     return redirect('admin:dossier_project_add')
 
-
-def add_work(request):
-    return redirect('admin:dossier_project_add')
