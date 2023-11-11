@@ -24,16 +24,19 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
-class Skill (models.Model):
+class Skill(models.Model):
     name = models.CharField(max_length=550)
-    proficiency = models.DecimalField(max_digits=3, decimal_places=1, validators=[
-                                      MinValueValidator(0), MaxValueValidator(100)])
+    proficiency = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    )
 
     def __str__(self) -> str:
         return self.name
 
 
-class Contact (models.Model):
+class Contact(models.Model):
     first_name = models.CharField(max_length=550)
     last_name = models.CharField(max_length=550)
     email = models.EmailField(max_length=254)
@@ -50,23 +53,25 @@ class Contact (models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=250)
     kind = models.CharField(max_length=250)
-    image = models.URLField() 
+    image = models.URLField()
     link = models.URLField()
     github_link = models.URLField()
-    date_created =  models.DateTimeField(auto_now_add=True)
-    date_updated  = models.DateTimeField( auto_now=True)
- 
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    priority = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)], default=1
+    )
+
     def __str__(self) -> str:
         return self.name
 
 
-class Post (models.Model):
-
+class Post(models.Model):
     id = models.UUIDField(default=uuid4, primary_key=True)
     slug = models.SlugField(editable=False)
     title = models.CharField(max_length=550)
     content = models.TextField()
-    image = models.ImageField(upload_to='blog')
+    image = models.ImageField(upload_to="blog")
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     creator = models.CharField(max_length=500, null=True)

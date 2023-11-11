@@ -9,13 +9,13 @@ from .schema import ContactSchema, PostSchema, ProjectSchema, SkillSchema
 api = NinjaAPI()
 
 
-@api.get('/profile')
+@api.get("/profile")
 def get_profile(request):
     profile = Profile.objects.first()
     return profile
 
 
-@api.get('/projects', response=List[ProjectSchema])
+@api.get("/projects", response=List[ProjectSchema])
 def get_projects(request):
     projects = Project.objects.all()
     return projects
@@ -23,7 +23,7 @@ def get_projects(request):
 
 @api.get("/skills", response=List[SkillSchema])
 def my_skills(request):
-    skills = Skill.objects.all().order_by('-proficiency', 'name')[:5]
+    skills = Skill.objects.all().order_by("-proficiency", "name")[:5]
 
     return skills
 
@@ -32,15 +32,12 @@ def my_skills(request):
 def contact_me(request, info: ContactSchema):
     Contact.objects.create(**info.dict())
 
-    return {
-        "detail": "Message sent successfully",
-        "status": True
-    }
+    return {"detail": "Message sent successfully", "status": True}
 
 
-@api.get('/posts', response=List[PostSchema])
+@api.get("/posts", response=List[PostSchema])
 def blog_posts(request):
-    posts = Post.objects.all().order_by('-date_created')
+    posts = Post.objects.all().order_by("-date_created")
 
     return posts
 
@@ -51,12 +48,17 @@ def single_post(request, post_id: int):
 
     return post
 
+
 @api.post("/admin")
 def register_admin(request):
     from django.contrib.auth import get_user_model
 
-    get_user_model().objects._create_user(username = "admin", email="admin@django.com", password = "123", is_superuser = True, is_staff=True)
+    get_user_model().objects._create_user(
+        username="admin",
+        email="admin@django.com",
+        password="123",
+        is_superuser=True,
+        is_staff=True,
+    )
 
-    return{
-        "message": "successful"
-    }
+    return {"message": "successful"}

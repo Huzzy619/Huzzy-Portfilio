@@ -36,9 +36,9 @@ RUN python3  manage.py collectstatic --no-input
 
 RUN python3 manage.py migrate
 
-EXPOSE 8005
+EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8005", "MyWeb.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:800", "MyWeb.wsgi"]
 # CMD [ "python3", "manage.py", "runserver","0.0.0.0:8000" ]
 
 

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 from decouple import config
@@ -32,13 +33,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-
     "dossier",
     "rest_portfolio",
-
-
     "jazzmin",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,19 +43,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    'cloudinary_storage',
-    'cloudinary',
-    
-
-
-
+    "cloudinary_storage",
+    "cloudinary",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -92,26 +83,18 @@ WSGI_APPLICATION = "MyWeb.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    
-    
-    "default":{
-
+    "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3-mine",
     },
-
-    "default1":{
+    "default1": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "est",
         "PORT": 5432,
         "USER": "postgres",
-        "PASSWORD": "0509"
-
-
-    } 
-
+        "PASSWORD": "0509",
+    },
 }
-
 
 
 # Password validation
@@ -119,7 +102,9 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        ),
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -152,7 +137,7 @@ STATIC_URL = "/static/"
 
 # STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
@@ -174,7 +159,6 @@ EMAIL_HOST = "localhost"
 EMAIL_PORT = 2525
 
 
-
 # CLOUDINARY_STORAGE = {
 #     'CLOUD_NAME': config('CLOUD_NAME'),
 #     'API_KEY': config('CLOUD_API_KEY'),
@@ -182,51 +166,36 @@ EMAIL_PORT = 2525
 # }
 
 JAZZMIN_SETTINGS = {
-     # title of the window (Will default to current_admin_site.site_title if absent or None)
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Mine",
-
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Portfolio",
-
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": "HUZZY",
-
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "images/apple-touch-icon.png",
-
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": "images/apple-touch-icon.png",
-
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": None,
-
-    # CSS classes that are applied to the logo above 
+    # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
-
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": "images/favicon-32x32.png",
-
     # Welcome text on the login screen
     "welcome_sign": "Login to Huzzy's Portfolio Website",
-
     # Copyright on the footer
     "copyright": "HUZZY",
-
-    "icons":{
+    "icons": {
         "dossier.contact": "fas fa-address-book",
-        "dossier.post":"fas fa-blog",
-        "dossier.profile":"fas fa-user-md",
-        "dossier.project":"fas fa-tasks",
-        "dossier.user":"fas fa-user-circle",
-        "dossier.skill":"fas fa-laptop-house" ,
-
+        "dossier.post": "fas fa-blog",
+        "dossier.profile": "fas fa-user-md",
+        "dossier.project": "fas fa-tasks",
+        "dossier.user": "fas fa-user-circle",
+        "dossier.skill": "fas fa-laptop-house",
         "auth.group": "fas fa-users",
-
     },
-
     "show_ui_builder": True,
-
-
 }
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
@@ -256,8 +225,8 @@ JAZZMIN_UI_TWEAKS = {
         "info": "btn-info",
         "warning": "btn-warning",
         "danger": "btn-danger",
-        "success": "btn-success"
-    }
+        "success": "btn-success",
+    },
 }
 
 ADMIN_URL = config("ADMIN_URL", "admin/")

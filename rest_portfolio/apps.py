@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class RestApiPortfolioConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'rest_portfolio'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "rest_portfolio"
